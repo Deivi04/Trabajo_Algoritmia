@@ -3,6 +3,8 @@
 #include <string.h>
 #include <math.h>
 
+
+
 int main() {
     FILE *archivo;
     char linea[256];
@@ -23,6 +25,12 @@ int main() {
     int minProy=0;
     
     float tabla[10000][9];
+    
+    typedef struct objeto{
+		float dist;
+		float result;
+	}objeto;
+    
     int i=0;
     int j=0;
   
@@ -207,31 +215,67 @@ int main() {
 	scanf("%d",&aux);
 	estudiante[7]=(((float)aux - (float)minProy)/((float)maxProy - (float)minProy));
 	
+	int num;
+	printf("Introduce con cuántos estudiantes comparar: ");
+	scanf("%d",&num);
 	
-
-	int res;
-	float minDist=30;
+	objeto array[num]; 
+	
+	for (i=0;i<num;i++){
+		array[i].dist=30;//Inicializamos el array con valores mayores al máximo posible
+						 //para que siempre sean menores y entren a la tabla
+	}
+	
+	
 	float dist;
 	for(i=0;i<=10000;i++){
 		dist=0;
 		for (j=0;j<=7;j++){
 			dist= dist + fabs(tabla[i][j] - estudiante[j]);
 		}
-		if(dist < minDist){ 
-			minDist=dist;
-			estudiante[8]=tabla[i][8];
-			res=i;
+		if(dist < array[0].dist){ 
+			array[0].dist=dist;
+			array[0].result=tabla[i][8];
+			for (int k=1;k<num;k++){
+				if(array[k-1].dist<array[k].dist){
+					objeto aux;
+					aux.dist=array[k-1].dist;
+					aux.result=array[k-1].result;
+					
+					array[k-1].dist=array[k].dist;
+					array[k-1].result=array[k].result;
+					
+					array[k].dist=aux.dist;
+					array[k].result=aux.result;
+				}
+			}
+			
 		}
 		
 	}
-	printf("min: %.2f\n",minDist);
-	if(estudiante[8]==1.0){
-		printf("Aceptado\n");
-	}else{
-		printf("Denegado\n");
+	int contSi=0;
+	int contNo=0;
+	for(i=0;i<3;i++){
+		
+		if (array[i].result==1){
+			contSi++;
+		}else{
+			contNo++;
+		}
 	}
-	printf("%d\n",res);
-	printf("%.2f\n",tabla[res][8]);
+	
+	if(contSi>contNo){
+		printf("Aceptado\n");
+	}else if(contSi<contNo){
+		printf("Denegado\n");
+	}else{
+		if( array[num-1].result==1){
+			printf("Aceptado\n");
+		}else{
+			printf("Denegado\n");
+		}
+	}
+	
 	
 
 
