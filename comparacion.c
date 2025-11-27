@@ -200,7 +200,7 @@ int main() {
 		
 		
 		float dist;
-		for(i=0;i<=10000;i++){
+		for(i=0;i<=9000;i++){
 			dist=0;
 			for (j=0;j<=7;j++){
 				dist= dist + fabs(tabla[i][j] - estudiante[j]);
@@ -228,7 +228,7 @@ int main() {
 		int contSi=0;
 		int contNo=0;
 		
-		for(i=0;i<3;i++){
+		for(i=0;i<num;i++){
 			
 			if (array[i].result==1){
 				contSi++;
@@ -254,13 +254,23 @@ int main() {
 		}else{
 			if( array[num-1].result==1){
 				printf("Aceptado\n");
+				if(tabla[a][8]==0){
+					
+					contFAcep++;
+				}
 			}else{
 				printf("Denegado\n");
+				if(tabla[a][8]==1){
+					
+					contFDen++;
+				}
 			}
 		}
 	}
 	printf("Ha habido %d falsos aceptados\n",contFAcep);
 	printf("Ha habido %d falsos denegados\n",contFDen);
+	float fiab = 100000.0/(1000.0 + (float)contFAcep + (float)contFDen);
+	printf("Tiene fiabilidad del %.02f %%\n",fiab);
 
 	
 	
