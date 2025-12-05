@@ -3,11 +3,6 @@
 #include <string.h>
 #include <math.h>
 
-#include "colaEnteros.h"
-
-
-
-
 int main() {
     FILE *archivo;
     char linea[256];
@@ -152,9 +147,9 @@ int main() {
 	scanf("%d",&num);
     
     objeto array[num]; 
+    int indices[10000];
     int nelem=0;
     float estudiante[9];
-    nuevaCola(&colaInd);
     float dist;
     for(int e=0;e<9000;e++){
 		
@@ -163,7 +158,7 @@ int main() {
 							 //para que siempre sean menores y entren a la tabla
 		}
 		
-		for(i=0;i<=9000;i++){
+		for(i=0;i<9000;i++){
 			dist=0;
 			for (j=0;j<=7;j++){
 				dist= dist + fabs(tabla[i][j] - tabla[e][j]);
@@ -202,15 +197,16 @@ int main() {
 		
 		if(contSi>contNo){
 			if(tabla[e][8]==1.0){
+				indices[nelem]=e;
 				nelem++;
-				encolar(&colaInd,e);
+				
 			}
 			
 			
 		}else if(contSi<contNo){
 			if(tabla[e][8]==0){
+				indices[nelem]=e;
 				nelem++;
-				encolar(&colaInd,e);
 			}
 			
 			
@@ -218,14 +214,14 @@ int main() {
 			if( array[num-1].result==1){
 				
 				if(tabla[e][8]==1.0){
+					indices[nelem]=e;
 					nelem++;
-					encolar(&colaInd,e);
 				}
 			}else{
 				
 				if(tabla[e][8]==0){
+					indices[nelem]=e;
 					nelem++;
-					encolar(&colaInd,e);
 				}
 			}
 		}
@@ -250,12 +246,11 @@ int main() {
 		}
 		
 		
-		
-		for(i=0;i<=nelem;i++){
+		int ind=0;
+		for(i=0;i<nelem;i++){
 			dist=0;
-			int ind=frente(colaInd);
-			desencolar(&colaInd);
-			encolar(&colaInd,ind);
+			ind=indices[i];
+			
 			for (j=0;j<=7;j++){
 				dist= dist + fabs(tabla[ind][j] - estudiante[j]);
 			}
@@ -323,12 +318,8 @@ int main() {
 	}
 	printf("Ha habido %d falsos aceptados\n",contFAcep);
 	printf("Ha habido %d falsos denegados\n",contFDen);
-	float fiab = 100000.0/(1000.0 + (float)contFAcep + (float)contFDen);
+	float fiab = 100*((1000.0 - ((float)contFAcep + (float)contFDen))/1000.0);
 	printf("Tiene fiabilidad del %.02f %%\n",fiab);
-
-	
-	
-
 
     fclose(archivo);
     return 0;

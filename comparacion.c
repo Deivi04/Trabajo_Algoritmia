@@ -200,7 +200,7 @@ int main() {
 		
 		
 		float dist;
-		for(i=0;i<=9000;i++){
+		for(i=0;i<9000;i++){
 			dist=0;
 			for (j=0;j<=7;j++){
 				dist= dist + fabs(tabla[i][j] - estudiante[j]);
@@ -269,7 +269,7 @@ int main() {
 	}
 	printf("Ha habido %d falsos aceptados\n",contFAcep);
 	printf("Ha habido %d falsos denegados\n",contFDen);
-	float fiab = 100000.0/(1000.0 + (float)contFAcep + (float)contFDen);
+	float fiab = ((1000.0 - ((float)contFAcep + (float)contFDen))/10.0);
 	printf("Tiene fiabilidad del %.02f %%\n",fiab);
 
 	
