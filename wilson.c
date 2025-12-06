@@ -21,7 +21,7 @@ int main() {
     int minCom=1;
     int maxProy=5;
     int minProy=0;
-    tipoCola colaInd;
+   
     
     float tabla[10000][9];
     
